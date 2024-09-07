@@ -5,7 +5,7 @@ import EditEmployee from "./pages/EditEmployee/EditEmployee";
 import Login from "./pages/Login/Login";
 import { useAtom } from "jotai";
 import { authLoadingAtom, isAuthenticatedAtom } from "./atoms/authAtom";
-import CircularIndeterminate from "./components/Spinner";
+import Spinner from "./components/Spinner";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config";
@@ -46,7 +46,7 @@ const MainRouter = () => {
   }, [setIsAuthenticated, setIsAuthLoading]);
 
   if (isAuthLoading) {
-    return <CircularIndeterminate />;
+    return <Spinner />;
   }
 
   return (
