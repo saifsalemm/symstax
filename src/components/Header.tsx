@@ -6,7 +6,7 @@ const Header = () => {
       sx={{
         display: "flex",
         justifyContent: "left",
-        alignItems: "left",
+        alignItems: "center",
         height: "10vh",
         width: "100vw",
       }}

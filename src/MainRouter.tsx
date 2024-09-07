@@ -6,10 +6,13 @@ import Login from "./pages/Login/Login";
 import { useAtom } from "jotai";
 import { authLoadingAtom, isAuthenticatedAtom } from "./atoms/authAtom";
 import CircularIndeterminate from "./components/Spinner";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase/config";
 
 const MainRouter = () => {
-  const [isAuthenticated] = useAtom(isAuthenticatedAtom);
-  const [isAuthLoadingAtom] = useAtom(authLoadingAtom);
+  const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
+  const [isAuthLoading, setIsAuthLoading] = useAtom(authLoadingAtom);
 
   const protectedRouter = createBrowserRouter([
     {
@@ -33,7 +36,16 @@ const MainRouter = () => {
     },
   ]);
 
-  if (isAuthLoadingAtom) {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setIsAuthenticated(!!currentUser);
+      setIsAuthLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [setIsAuthenticated, setIsAuthLoading]);
+
+  if (isAuthLoading) {
     return <CircularIndeterminate />;
   }
 
