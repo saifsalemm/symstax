@@ -4,10 +4,12 @@ import CreateEmployee from "./pages/CreateEmployee/CreateEmployee";
 import EditEmployee from "./pages/EditEmployee/EditEmployee";
 import Login from "./pages/Login/Login";
 import { useAtom } from "jotai";
-import { isAuthenticatedAtom } from "./atoms/authAtom";
+import { authLoadingAtom, isAuthenticatedAtom } from "./atoms/authAtom";
+import CircularIndeterminate from "./components/Spinner";
 
 const MainRouter = () => {
   const [isAuthenticated] = useAtom(isAuthenticatedAtom);
+  const [isAuthLoadingAtom] = useAtom(authLoadingAtom);
 
   const protectedRouter = createBrowserRouter([
     {
@@ -30,6 +32,11 @@ const MainRouter = () => {
       element: <Login />,
     },
   ]);
+
+  if (isAuthLoadingAtom) {
+    return <CircularIndeterminate />;
+  }
+
   return (
     <RouterProvider router={isAuthenticated ? protectedRouter : loginRouter} />
   );

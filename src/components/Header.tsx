@@ -1,8 +1,19 @@
+import { Box } from "@mui/material";
 
 const Header = () => {
   return (
-    <div>Header</div>
-  )
-}
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "left",
+        alignItems: "left",
+        height: "10vh",
+        width: "100vw",
+      }}
+    >
+      <div>Header</div>
+    </Box>
+  );
+};
 
-export default Header
+export default Header;

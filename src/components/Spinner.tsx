@@ -1,19 +1,18 @@
+import CircularProgress from "@mui/material/CircularProgress";
 import { Box } from "@mui/material";
 
-const Footer = () => {
+export default function CircularIndeterminate() {
   return (
     <Box
       sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "10vh",
+        height: "80vh",
         width: "100vw",
       }}
     >
-      <div>Footer</div>
+      <CircularProgress />
     </Box>
   );
-};
-
-export default Footer;
+}
