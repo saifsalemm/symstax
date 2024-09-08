@@ -1,8 +1,11 @@
+import { Container } from "@mui/material";
 
 const Employees = () => {
   return (
-    <div>Employees</div>
-  )
-}
+    <Container maxWidth="sm">
+      <div>Employees</div>
+    </Container>
+  );
+};
 
-export default Employees
+export default Employees;

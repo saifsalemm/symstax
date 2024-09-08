@@ -4,14 +4,15 @@ const Footer = () => {
   return (
     <Box
       sx={{
+        bgcolor: "#f5f5f5",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "10vh",
+        height: "11vh",
         width: "100vw",
       }}
     >
-      <div>Footer</div>
+      <div>Symstax</div>
     </Box>
   );
 };

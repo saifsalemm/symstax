@@ -1,8 +1,11 @@
+import { Container } from "@mui/material";
 
 const Login = () => {
   return (
-    <div>Login</div>
-  )
-}
+    <Container maxWidth="sm" sx={{bgcolor: 'red', height: '80vh'}}>
+      <div>Login</div>
+    </Container>
+  );
+};
 
-export default Login
+export default Login;
