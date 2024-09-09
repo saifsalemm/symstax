@@ -10,19 +10,10 @@ import {
 
 interface LoginFormProps {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  emailError: boolean;
-  passwordError: boolean;
-  emailErrorMessage: string;
-  passwordErrorMessage: string;
+  pending: boolean;
 }
 
-const LoginForm = ({
-  handleSubmit,
-  emailError,
-  passwordError,
-  emailErrorMessage,
-  passwordErrorMessage,
-}: LoginFormProps) => {
+const LoginForm = ({ handleSubmit, pending }: LoginFormProps) => {
   return (
     <Box
       component="form"
@@ -38,8 +29,6 @@ const LoginForm = ({
       <FormControl>
         <FormLabel htmlFor="email">Email</FormLabel>
         <TextField
-          error={emailError}
-          helperText={emailErrorMessage}
           id="email"
           type="email"
           name="email"
@@ -49,7 +38,6 @@ const LoginForm = ({
           required
           fullWidth
           variant="outlined"
-          color={emailError ? "error" : "primary"}
           sx={{ ariaLabel: "email" }}
         />
       </FormControl>
@@ -58,8 +46,6 @@ const LoginForm = ({
           <FormLabel htmlFor="password">Password</FormLabel>
         </Box>
         <TextField
-          error={passwordError}
-          helperText={passwordErrorMessage}
           name="password"
           placeholder="••••••"
           type="password"
@@ -69,14 +55,13 @@ const LoginForm = ({
           required
           fullWidth
           variant="outlined"
-          color={passwordError ? "error" : "primary"}
         />
       </FormControl>
       <FormControlLabel
         control={<Checkbox value="remember" color="primary" />}
         label="Remember me"
       />
-      <Button type="submit" fullWidth variant="contained">
+      <Button type="submit" fullWidth variant="contained" disabled={pending}>
         Sign in
       </Button>
     </Box>

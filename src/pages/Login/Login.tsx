@@ -1,53 +1,25 @@
 import Typography from "@mui/material/Typography";
-import { Card, Container } from "@mui/material";
-import { useState } from "react";
+import { Alert, Card, Container } from "@mui/material";
 import LoginForm from "./LoginForm";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const { signIn, pending, credsIncorrect } = useAuth();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-    validateInputs({ email: String(email), password: String(password) });
-    console.log("FORM SUBMIT", { email, password });
-  };
-
-  const validateInputs = ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
-    let isValid = true;
-
-    if (!email || !password) return;
-
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      setEmailError(true);
-      setEmailErrorMessage("Please enter a valid email address.");
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage("");
-    }
-
-    if (!password || password.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage("Password must be at least 6 characters long.");
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage("");
-    }
-
-    return isValid;
+    const user = await signIn({
+      email: String(email),
+      password: String(password),
+    });
+    console.log("FORM SUBMIT", user);
+    if (user.success) navigate("/employees");
   };
 
   return (
@@ -80,13 +52,10 @@ const Login = () => {
         >
           Sign in
         </Typography>
-        <LoginForm
-          handleSubmit={handleSubmit}
-          emailError={emailError}
-          passwordError={passwordError}
-          emailErrorMessage={emailErrorMessage}
-          passwordErrorMessage={passwordErrorMessage}
-        />
+        <LoginForm handleSubmit={handleSubmit} pending={pending} />
+        {credsIncorrect && !pending && (
+          <Alert severity="error">Email or Password is incorrect.</Alert>
+        )}
       </Card>
     </Container>
   );

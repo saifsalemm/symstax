@@ -11,12 +11,16 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
+import useAuth from "../../hooks/useAuth";
+import { useAtom } from "jotai";
+import { isAuthenticatedAtom } from "../../atoms/authAtom";
 
 const pages = ["Employees"];
 const settings = ["Logout"];
 
 function Header() {
+  const [isAuthenticated] = useAtom(isAuthenticatedAtom);
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -24,10 +28,13 @@ function Header() {
     null
   );
 
+  const { signOut } = useAuth();
+
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    if (!isAuthenticated) return;
     setAnchorElUser(event.currentTarget);
   };
 
@@ -35,7 +42,10 @@ function Header() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = async (key: string) => {
+    if (key === "Logout") {
+      await signOut();
+    }
     setAnchorElUser(null);
   };
 
@@ -149,7 +159,10 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => handleCloseUserMenu(setting)}
+                >
                   <Typography sx={{ textAlign: "center" }}>
                     {setting}
                   </Typography>
