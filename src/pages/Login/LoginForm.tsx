@@ -32,7 +32,7 @@ const LoginForm = ({ handleSubmit, pending }: LoginFormProps) => {
           id="email"
           type="email"
           name="email"
-          placeholder="your@email.com"
+          placeholder="saifsalemmail@gmail.com"
           autoComplete="email"
           autoFocus
           required
@@ -47,7 +47,7 @@ const LoginForm = ({ handleSubmit, pending }: LoginFormProps) => {
         </Box>
         <TextField
           name="password"
-          placeholder="••••••"
+          placeholder="123456"
           type="password"
           id="password"
           autoComplete="current-password"
