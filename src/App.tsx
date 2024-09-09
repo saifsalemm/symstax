@@ -1,5 +1,4 @@
 import Header from "./components/Header/Header";
-import Footer from "./components/Footer";
 import MainRouter from "./MainRouter";
 
 function App() {
@@ -7,7 +6,6 @@ function App() {
     <>
       <Header />
       <MainRouter />
-      <Footer />
     </>
   );
 }
