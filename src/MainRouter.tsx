@@ -9,6 +9,7 @@ import Spinner from "./components/Spinner";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/config";
+import NotFound from "./pages/404/NotFound";
 
 const MainRouter = () => {
   const [isAuthenticated, setIsAuthenticated] = useAtom(isAuthenticatedAtom);
@@ -20,12 +21,20 @@ const MainRouter = () => {
       element: <Employees />,
     },
     {
-      path: "/create",
+      path: "/employees",
+      element: <Employees />,
+    },
+    {
+      path: "/employees/create",
       element: <CreateEmployee />,
     },
     {
-      path: "/:employeeId",
+      path: "/employees/:employeeId",
       element: <EditEmployee />,
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ]);
 
