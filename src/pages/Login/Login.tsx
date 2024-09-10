@@ -18,7 +18,6 @@ const Login = () => {
       email: String(email),
       password: String(password),
     });
-    console.log("FORM SUBMIT", user);
     if (user.success) navigate("/employees");
   };
 
