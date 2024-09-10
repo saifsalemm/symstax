@@ -7,17 +7,15 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import { Employee } from "../types";
 
 const employeesCollection = collection(db, "employees");
 
-interface Employee {
+export const addOne = async (employeeData: {
   name: string;
-  email: string;
   role: string;
   department: string;
-}
-
-export const addEmployee = async (employeeData: Employee) => {
+}) => {
   try {
     const docRef = await addDoc(employeesCollection, employeeData);
     return docRef.id;
@@ -27,13 +25,13 @@ export const addEmployee = async (employeeData: Employee) => {
   }
 };
 
-export const getEmployees = async () => {
+export const getAll = async () => {
   try {
     const querySnapshot = await getDocs(employeesCollection);
     const employees = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    })) as Employee[];
     return employees;
   } catch (error) {
     console.error("Error fetching employees: ", error);
@@ -41,20 +39,17 @@ export const getEmployees = async () => {
   }
 };
 
-export const updateEmployee = async (
-  employeeId: string,
-  updatedData: { [key in Employee as string]: string }
-) => {
+export const updateOne = async (employeeId: string, updatedData: Employee) => {
   try {
     const employeeDoc = doc(db, "employees", employeeId);
-    await updateDoc(employeeDoc, updatedData);
+    await updateDoc(employeeDoc, { ...updatedData });
   } catch (error) {
     console.error("Error updating employee: ", error);
     throw new Error("Failed to update employee");
   }
 };
 
-export const deleteEmployee = async (employeeId: string) => {
+export const deleteOne = async (employeeId: string) => {
   try {
     const employeeDoc = doc(db, "employees", employeeId);
     await deleteDoc(employeeDoc);
