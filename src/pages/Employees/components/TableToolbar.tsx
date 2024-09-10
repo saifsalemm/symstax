@@ -1,4 +1,4 @@
-import { Toolbar, Typography } from "@mui/material";
+import { Button, Toolbar, Typography } from "@mui/material";
 
 export default function TableToolbar() {
   return (
@@ -18,6 +18,9 @@ export default function TableToolbar() {
       >
         Employees Data
       </Typography>
+      <Button sx={{ flex: "1 1 20%" }} variant="contained" color="success">
+        Add Employee
+      </Button>
     </Toolbar>
   );
 }
