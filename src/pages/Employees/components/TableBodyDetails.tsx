@@ -1,5 +1,10 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import { Data, Employee, Order } from "../../../types";
+import { useAtom } from "jotai";
+import {
+  currentEmployeeAtom,
+  modalOpenAtom,
+} from "../../../atoms/employeeAtom";
 
 const TableBodyDetails = ({
   employees,
@@ -7,15 +12,16 @@ const TableBodyDetails = ({
   page,
   order,
   orderBy,
-  setModalOpen,
 }: {
   employees: Employee[];
   employeesPerPage: number;
   page: number;
   order: Order;
   orderBy: keyof Data;
-  setModalOpen: (x: boolean) => void;
 }) => {
+  const [_, setCurrentEmployee] = useAtom(currentEmployeeAtom);
+  const [__, setModalOpen] = useAtom(modalOpenAtom);
+
   function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
       return -1;
@@ -45,13 +51,14 @@ const TableBodyDetails = ({
     .sort(getComparator(order, orderBy))
     .slice(page * employeesPerPage, page * employeesPerPage + employeesPerPage);
 
-  const handleClick = () => {
+  const handleClick = (employee: Employee) => {
+    setCurrentEmployee(employee);
     setModalOpen(true);
   };
 
   return (
     <TableBody>
-      {visibleemployees?.map((row, index) => {
+      {visibleemployees?.map((employee, index) => {
         const labelId = `enhanced-table-checkbox-${index}`;
         return (
           <TableRow
@@ -59,17 +66,17 @@ const TableBodyDetails = ({
             role="checkbox"
             aria-checked={false}
             tabIndex={-1}
-            key={row.id}
+            key={employee.id}
             selected={false}
             sx={{ cursor: "pointer" }}
-            onClick={() => handleClick()}
+            onClick={() => handleClick(employee)}
           >
-            <TableCell align="left">{row.id}</TableCell>
+            <TableCell align="left">{employee.id}</TableCell>
             <TableCell component="th" id={labelId} scope="row" padding="none">
-              {row.name}
+              {employee.name}
             </TableCell>
-            <TableCell align="left">{row.department}</TableCell>
-            <TableCell align="left">{row.role}</TableCell>
+            <TableCell align="left">{employee.department}</TableCell>
+            <TableCell align="left">{employee.role}</TableCell>
           </TableRow>
         );
       })}

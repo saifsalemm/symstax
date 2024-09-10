@@ -18,7 +18,6 @@ export default function EmployeesTable({
   const [order, setOrder] = useState<Order>("asc");
   const [orderBy, setOrderBy] = useState<keyof Data>("id");
   const [page, setPage] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
 
   const employeesPerPage = 5;
 
@@ -57,7 +56,6 @@ export default function EmployeesTable({
                 page={page}
                 order={order}
                 orderBy={orderBy}
-                setModalOpen={setModalOpen}
               />
             </Table>
           </TableContainer>
@@ -73,7 +71,7 @@ export default function EmployeesTable({
           />
         </Paper>
       </Box>
-      <EmployeeDetailsModal modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      <EmployeeDetailsModal />
     </>
   );
 }
