@@ -5,7 +5,7 @@ import {
   updateOne,
   deleteOne,
 } from "../services/employeeService";
-import { Employee } from "../types";
+import { Employee } from "../types/types";
 
 const useEmployees = () => {
   const [isPending, setIsPending] = useState(false);
