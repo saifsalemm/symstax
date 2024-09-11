@@ -15,8 +15,9 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import useAuth from "../../hooks/useAuth";
 import { useAtom } from "jotai";
 import { isAuthenticatedAtom } from "../../atoms/authAtom";
+import { useNavigate } from "react-router-dom";
 
-const pages = ["Employees"];
+const pages = [{ title: "Employees", path: "/employees" }];
 const settings = ["Logout"];
 
 function Header() {
@@ -29,6 +30,7 @@ function Header() {
   );
 
   const { signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -38,7 +40,8 @@ function Header() {
     setAnchorElUser(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (path?: string) => {
+    if (path) navigate(path);
     setAnchorElNav(null);
   };
 
@@ -58,7 +61,7 @@ function Header() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -96,12 +99,17 @@ function Header() {
                 horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={() => handleCloseNavMenu()}
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+                <MenuItem
+                  key={page.title}
+                  onClick={() => handleCloseNavMenu(page.path)}
+                >
+                  <Typography sx={{ textAlign: "center" }}>
+                    {page.title}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -128,11 +136,11 @@ function Header() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.title}
+                onClick={() => handleCloseNavMenu(page.path)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.title}
               </Button>
             ))}
           </Box>
