@@ -34,7 +34,7 @@ export default function EmployeesTable({
   return (
     <>
       <Box sx={{ width: "100%" }}>
-        <Paper sx={{ width: "100%", mb: 2 }}>
+        <Paper sx={{ width: "100%", mb: 2, boxShadow: 4, padding: "2rem" }}>
           <TableToolbar />
 
           <TableContainer>

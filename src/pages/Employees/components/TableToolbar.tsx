@@ -1,6 +1,9 @@
 import { Button, Toolbar, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function TableToolbar() {
+  const navigate = useNavigate();
+
   return (
     <Toolbar
       sx={[
@@ -16,9 +19,14 @@ export default function TableToolbar() {
         id="tableTitle"
         component="div"
       >
-        Employees Data
+        <strong>Employees Data</strong>
       </Typography>
-      <Button sx={{ flex: "1 1 20%" }} variant="contained" color="success">
+      <Button
+        sx={{ flex: "1 1 20%" }}
+        variant="contained"
+        color="success"
+        onClick={() => navigate("/employees/create")}
+      >
         Add Employee
       </Button>
     </Toolbar>
