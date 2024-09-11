@@ -29,13 +29,14 @@ export default function EmployeeChildModal() {
   const queryClient = useQueryClient();
   const [childModalOpen, setChildModalOpen] = useAtom(childModalOpenAtom);
   const [_, setModalOpen] = useAtom(modalOpenAtom);
-  const [currentEmployee] = useAtom(currentEmployeeAtom);
+  const [currentEmployee, setCurrentEmployee] = useAtom(currentEmployeeAtom);
   const { deleteEmployee } = useEmployees();
   const [__, setParams] = useSearchParams();
 
   const handleClose = async () => {
     await deleteEmployee(currentEmployee?.id!);
     queryClient.invalidateQueries({ queryKey: ["employees"] });
+    setCurrentEmployee({ name: "", role: "", department: "" });
     setChildModalOpen(false);
     setModalOpen(false);
     setParams({ employee_deleted: "1" });
