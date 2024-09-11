@@ -8,6 +8,7 @@ import {
 } from "../../../atoms/employeeAtom";
 import useEmployees from "../../../hooks/useEmployees";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSearchParams } from "react-router-dom";
 
 const style = {
   position: "absolute" as "absolute",
@@ -30,12 +31,14 @@ export default function EmployeeChildModal() {
   const [_, setModalOpen] = useAtom(modalOpenAtom);
   const [currentEmployee] = useAtom(currentEmployeeAtom);
   const { deleteEmployee } = useEmployees();
+  const [__, setParams] = useSearchParams();
 
   const handleClose = async () => {
     await deleteEmployee(currentEmployee?.id!);
     queryClient.invalidateQueries({ queryKey: ["employees"] });
     setChildModalOpen(false);
     setModalOpen(false);
+    setParams({ employee_deleted: "1" });
   };
 
   useEffect(() => {

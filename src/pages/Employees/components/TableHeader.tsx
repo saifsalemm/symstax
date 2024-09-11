@@ -5,7 +5,7 @@ import {
   TableRow,
   TableSortLabel,
 } from "@mui/material";
-import { Data, HeadCell, TableProps } from "../../../types";
+import { Data, HeadCell, TableProps } from "../../../types/types";
 import { visuallyHidden } from "@mui/utils";
 
 export default function TableHeader(props: TableProps) {

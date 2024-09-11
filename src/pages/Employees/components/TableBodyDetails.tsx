@@ -1,5 +1,5 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
-import { Data, Employee, Order } from "../../../types";
+import { Data, Employee, Order } from "../../../types/types";
 import { useAtom } from "jotai";
 import {
   currentEmployeeAtom,

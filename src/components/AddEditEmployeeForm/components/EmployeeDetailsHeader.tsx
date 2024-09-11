@@ -1,9 +1,12 @@
 import { Button, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { currentEmployeeAtom } from "../../../atoms/employeeAtom";
 
-const EmployeeDetailsHeader = () => {
+const EmployeeDetailsHeader = ({ title }: { title: string }) => {
   const navigate = useNavigate();
+  const [_, setCurrentEmployee] = useAtom(currentEmployeeAtom);
 
   return (
     <div
@@ -19,11 +22,14 @@ const EmployeeDetailsHeader = () => {
         variant="contained"
         color="primary"
         sx={{ height: "2rem", width: "0.5rem" }}
-        onClick={() => navigate("/employees")}
+        onClick={() => {
+          setCurrentEmployee({ id: "", name: "", role: "", department: "" });
+          navigate("/employees");
+        }}
       >
         <ArrowBackIosNewIcon sx={{ color: "white", fontSize: "1rem" }} />
       </Button>
-      <Typography variant="h5">Add New Employee</Typography>
+      <Typography variant="h5">{title}</Typography>
     </div>
   );
 };

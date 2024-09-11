@@ -7,7 +7,7 @@ import {
   deleteDoc,
   doc,
 } from "firebase/firestore";
-import { Employee } from "../types";
+import { Employee } from "../types/types";
 
 const employeesCollection = collection(db, "employees");
 

@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import EmployeeChildModal from "./EmployeeChildModal";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute" as "absolute",
@@ -29,9 +30,15 @@ export default function EmployeeDetailsModal() {
   const [currentEmployee] = useAtom(currentEmployeeAtom);
   const [modalOpen, setModalOpen] = useAtom(modalOpenAtom);
   const [_, setChildModalOpen] = useAtom(childModalOpenAtom);
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setModalOpen(false);
+  };
+
+  const handleGoToEdit = () => {
+    setModalOpen(false);
+    navigate(`/employees/${currentEmployee?.id}`);
   };
 
   useEffect(() => {
@@ -75,7 +82,11 @@ export default function EmployeeDetailsModal() {
               gap: "1rem",
             }}
           >
-            <Button variant="contained" sx={{ width: "30%" }}>
+            <Button
+              variant="contained"
+              sx={{ width: "30%" }}
+              onClick={handleGoToEdit}
+            >
               Edit
             </Button>
             <Button

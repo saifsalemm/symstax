@@ -7,6 +7,8 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { currentEmployeeAtom } from "../../../atoms/employeeAtom";
+import { useAtom } from "jotai";
 
 const deparments = [
   "IT",
@@ -22,17 +24,23 @@ const deparments = [
   "Sales",
 ];
 
-const CreateEmployeeForm = ({
+const EmployeeForm = ({
   handleSubmit,
   nameError,
   roleError,
   departmentError,
+  mode,
+  isPending,
 }: {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   nameError: string | undefined;
   roleError: string | undefined;
   departmentError: string | undefined;
+  mode: string;
+  isPending: boolean;
 }) => {
+  const [data, setData] = useAtom(currentEmployeeAtom);
+
   return (
     <Box
       component="form"
@@ -50,6 +58,8 @@ const CreateEmployeeForm = ({
           name="name"
           type="text"
           label="Name"
+          value={data.name}
+          onChange={(e) => setData({ ...data, name: e.target.value })}
           variant="outlined"
           error={!!nameError}
           helperText={nameError}
@@ -61,6 +71,8 @@ const CreateEmployeeForm = ({
           name="role"
           type="text"
           label="Role"
+          value={data.role}
+          onChange={(e) => setData({ ...data, role: e.target.value })}
           variant="outlined"
           error={!!roleError}
           helperText={roleError}
@@ -71,6 +83,8 @@ const CreateEmployeeForm = ({
         <InputLabel id="demo-simple-select-label">Choose Department</InputLabel>
         <Select
           name="department"
+          value={data.department}
+          onChange={(e) => setData({ ...data, department: e.target.value })}
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           label="Choose Department"
@@ -82,11 +96,11 @@ const CreateEmployeeForm = ({
           ))}
         </Select>
       </FormControl>
-      <Button type="submit" variant="contained">
-        Create
+      <Button type="submit" variant="contained" disabled={isPending}>
+        {mode === "Add" ? "Create" : "Save"}
       </Button>
     </Box>
   );
 };
 
-export default CreateEmployeeForm;
+export default EmployeeForm;

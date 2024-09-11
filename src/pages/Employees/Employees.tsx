@@ -3,6 +3,7 @@ import useEmployees from "../../hooks/useEmployees";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../components/Spinner";
 import EmployeesTable from "./components/EmployeesTable";
+import EmployeeNotifications from "./components/Notifications";
 
 const Employees = () => {
   const { getEmployees } = useEmployees();
@@ -32,6 +33,25 @@ const Employees = () => {
       </Container>
     );
   }
+
+  if (employees?.length === 0) {
+    return (
+      <>
+        <Container
+          maxWidth="sm"
+          sx={{
+            height: "91vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Alert severity="error">No Employees found.</Alert>
+        </Container>
+      </>
+    );
+  }
+
   if (employees)
     return (
       <Container
@@ -44,6 +64,7 @@ const Employees = () => {
         }}
       >
         <EmployeesTable employees={employees} />
+        <EmployeeNotifications />
       </Container>
     );
 };

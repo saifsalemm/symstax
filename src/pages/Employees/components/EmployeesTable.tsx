@@ -3,7 +3,7 @@ import Table from "@mui/material/Table";
 import TableContainer from "@mui/material/TableContainer";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
-import { Data, Employee, Order } from "../../../types";
+import { Data, Employee, Order } from "../../../types/types";
 import TableToolbar from "./TableToolbar";
 import TableHeader from "./TableHeader";
 import TableBodyDetails from "./TableBodyDetails";
