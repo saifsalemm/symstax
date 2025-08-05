@@ -39,6 +39,7 @@ const LoginForm = ({ handleSubmit, pending }: LoginFormProps) => {
           fullWidth
           variant="outlined"
           sx={{ ariaLabel: "email" }}
+          defaultValue="saifsalemmail@gmail.com"
         />
       </FormControl>
       <FormControl>
@@ -55,6 +56,7 @@ const LoginForm = ({ handleSubmit, pending }: LoginFormProps) => {
           required
           fullWidth
           variant="outlined"
+          defaultValue="123456"
         />
       </FormControl>
       <FormControlLabel
